@@ -1,4 +1,4 @@
-# witeboard-table-app
+# eraser-table-app
 Table app for Eraser integration
 
 ## Debugging tool
