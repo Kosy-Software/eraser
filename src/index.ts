@@ -6,9 +6,9 @@ import { render } from './views/renderState';
 import { ClientInfo } from '@kosy/kosy-app-api/types';
 import { KosyApi } from '@kosy/kosy-app-api';
 
-module Kosy.Integration.Witeboard {
+module Kosy.Integration.Eraser {
     export class App {
-        private state: AppState = {};
+        private state: AppState = { tableId: null, layoutName: 'both' };
         private initializer: ClientInfo;
         private currentClient: ClientInfo;
 
@@ -24,6 +24,7 @@ module Kosy.Integration.Witeboard {
             this.initializer = initialInfo.clients[initialInfo.initializerClientUuid];
             this.currentClient = initialInfo.clients[initialInfo.currentClientUuid];
             this.state = initialInfo.currentAppState ?? this.state;
+            this.state.tableId = this.currentClient.clientLocation.table.tableUuid;
             this.renderComponent();
 
             window.addEventListener("message", (event: MessageEvent<ComponentMessage>) => {
@@ -57,6 +58,8 @@ module Kosy.Integration.Witeboard {
         //Poor man's react, so we don't need to fetch the entire react library for this tiny app...
         private renderComponent() {
             render({
+                tableId: this.state.tableId,
+                layoutName: this.state.layoutName,
                 currentClient: this.currentClient,
                 initializer: this.initializer,
             });

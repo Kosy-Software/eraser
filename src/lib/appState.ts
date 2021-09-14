@@ -2,6 +2,8 @@ import { ClientInfo } from '@kosy/kosy-app-api/types';
 
 export interface AppState {
     /// This state is only set once in this app
+    tableId?: string;
+    layoutName?: string;
 }
 
 export interface ComponentState extends AppState {
