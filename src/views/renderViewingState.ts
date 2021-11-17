@@ -5,7 +5,7 @@ export function renderViewingState(state: ComponentState): HTMLElement {
     let iframe = viewingElement.querySelector("iframe") as HTMLIFrameElement;
     iframe.style.height = "100vh";
     iframe.style.width = "100vw";
-    iframe.src = `https://app.tryeraser.com/integration/kosy-office/${state.tableId}?layout=${state.layoutName}`;
+    iframe.src = `https://app.tryeraser.com/integration/kosy-office/layout=${state.layoutName}`;
 
     return viewingElement;
 }
