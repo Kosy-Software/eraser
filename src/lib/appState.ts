@@ -2,7 +2,7 @@ import { ClientInfo } from '@kosy/kosy-app-api/types';
 
 export interface AppState {
     /// This state is only set once in this app
-    tableId?: string;
+    eraserName?: string;
     layoutName?: string;
 }
 
