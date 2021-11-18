@@ -8,7 +8,7 @@ import { KosyApi } from '@kosy/kosy-app-api';
 
 module Kosy.Integration.Eraser {
     export class App {
-        private state: AppState = { tableId: null, layoutName: 'both' };
+        private state: AppState = { eraserName: null, layoutName: 'both' };
         private initializer: ClientInfo;
         private currentClient: ClientInfo;
 
@@ -24,7 +24,7 @@ module Kosy.Integration.Eraser {
             this.initializer = initialInfo.clients[initialInfo.initializerClientUuid];
             this.currentClient = initialInfo.clients[initialInfo.currentClientUuid];
             this.state = initialInfo.currentAppState ?? this.state;
-            this.state.tableId = this.currentClient.clientLocation.table.tableUuid;
+            this.state.eraserName = initialInfo.locationUuid;
             this.renderComponent();
 
             window.addEventListener("message", (event: MessageEvent<ComponentMessage>) => {
@@ -58,7 +58,7 @@ module Kosy.Integration.Eraser {
         //Poor man's react, so we don't need to fetch the entire react library for this tiny app...
         private renderComponent() {
             render({
-                tableId: this.state.tableId,
+                eraserName: this.state.eraserName,
                 layoutName: this.state.layoutName,
                 currentClient: this.currentClient,
                 initializer: this.initializer,
