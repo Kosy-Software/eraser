@@ -4,6 +4,7 @@ export interface AppState {
     /// This state is only set once in this app
     eraserName?: string;
     layoutName?: string;
+    boardId?: number;
 }
 
 export interface ComponentState extends AppState {

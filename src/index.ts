@@ -8,7 +8,7 @@ import { KosyApi } from '@kosy/kosy-app-api';
 
 module Kosy.Integration.Eraser {
     export class App {
-        private state: AppState = { eraserName: null, layoutName: 'both' };
+        private state: AppState = { layoutName: 'both', boardId: null };
         private initializer: ClientInfo;
         private currentClient: ClientInfo;
 
@@ -24,7 +24,14 @@ module Kosy.Integration.Eraser {
             this.initializer = initialInfo.clients[initialInfo.initializerClientUuid];
             this.currentClient = initialInfo.clients[initialInfo.currentClientUuid];
             this.state = initialInfo.currentAppState ?? this.state;
-            this.state.eraserName = initialInfo.locationUuid;
+
+            if(this.state.boardId == null) {
+                //Board needs to be unique for the session only, not for the table
+                //So we generate a unique board id
+                let randomId = Math.floor(Math.random() * 100000);
+                this.state.boardId = randomId;
+            }
+
             this.renderComponent();
 
             window.addEventListener("message", (event: MessageEvent<ComponentMessage>) => {
@@ -58,7 +65,7 @@ module Kosy.Integration.Eraser {
         //Poor man's react, so we don't need to fetch the entire react library for this tiny app...
         private renderComponent() {
             render({
-                eraserName: this.state.eraserName,
+                boardId: this.state.boardId,
                 layoutName: this.state.layoutName,
                 currentClient: this.currentClient,
                 initializer: this.initializer,
